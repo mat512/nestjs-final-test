@@ -1,22 +1,28 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Task } from '@prisma/client';
+import { PrismaService } from '../infrastructure/database/prisma.service';
 
 @Injectable()
 export class TaskService {
-    constructor() {}
+    constructor(private prisma: PrismaService) {}
 
-    addTask(name: string, userId: string, priority: number): Promise<void> {
-        throw new NotImplementedException();
+    async addTask(
+        name: string,
+        userId: number,
+        priority: number,
+    ): Promise<Task> {
+        return this.prisma.task.create({ data: { name, userId, priority } });
     }
 
-    getTaskByName(name: string): Promise<unknown> {
-        throw new NotImplementedException();
+    async getTaskByName(name: string): Promise<Task | null> {
+        return this.prisma.task.findFirst({ where: { name } });
     }
 
-    getUserTasks(userId: string): Promise<unknown[]> {
-        throw new NotImplementedException();
+    async getUserTasks(userId: number): Promise<Task[]> {
+        return this.prisma.task.findMany({ where: { userId } });
     }
 
-    resetData(): Promise<void> {
-        throw new NotImplementedException();
+    async resetData(): Promise<void> {
+        await this.prisma.task.deleteMany({});
     }
 }
