@@ -29,7 +29,7 @@ export class TaskController {
             throw new BadRequestException('Invalid userId');
         }
 
-        if (!isValidPriority(parsedUserId)) {
+        if (!isValidPriority(parsedPriority)) {
             throw new BadRequestException(
                 'Priority must be a positive integer',
             );
