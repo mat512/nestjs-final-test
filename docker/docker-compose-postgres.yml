@@ -4,7 +4,7 @@ name: 'postgres_nestjs-final-test'
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16.2
     ports:
       - "${DATABASE_PORT}:5432"
     environment:
